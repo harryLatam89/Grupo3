@@ -389,6 +389,19 @@ public class formColaBanco extends javax.swing.JFrame {
 
     private void btnAleariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleariosActionPerformed
         // TODO add your handling code here:
+            for(int i=5 ; i<10; i++){
+          cola.ingresosAleatorio() ;
+    }
+       
+             Cliente  nodo = cola.getInicioCola();
+
+            modelo.setRowCount(0);
+
+            while (nodo != null) {
+
+                this.modelo.addRow(cola.vecRegistro(nodo));
+                nodo = nodo.getSiguiente();
+            }
         
         
         
