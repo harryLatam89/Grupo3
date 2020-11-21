@@ -1,6 +1,8 @@
 
 package proyectocolas;
 
+import proyectocolas.modelos.Cola;
+import proyectocolas.modelos.Cliente;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;

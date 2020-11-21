@@ -1,6 +1,6 @@
 
 
-package proyectocolas;
+package proyectocolas.modelos;
 
 public class Cliente {
 

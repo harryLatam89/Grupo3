@@ -1,6 +1,12 @@
-package proyectocolas;
+package proyectocolas.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+import proyectocolas.modelos.Cliente;
 import javax.swing.JOptionPane;
+import proyectocolas.ClienteRandom;
+import proyectocolas.Reportes;
+import proyectocolas.reporte.Datos;
 
 public class Cola {
 
@@ -162,38 +168,35 @@ public class Cola {
         return valor;
     }
 
-    
-    public void vaciar(){
-        inicioCola=finalCola=null;
+    public void vaciar() {
+        inicioCola = finalCola = null;
     }
-    
-    
-    public void estadisticos(){
-       JOptionPane.showMessageDialog(null,
-               
-            
 
-               
-               
-                        " Estadisticos "
-                        + "   **por tipo transaccion***\n"
-                        + "  Apertura de Cuenta"+apertura+" \n"
-                        + "  Deposito"+deposito+" \n"
-                        + "  Retiro "+retiro+"\n "
-                        + "  Pago Recibos "+pagoRecibos+"\n");
+    public void estadisticos() {
+//        JOptionPane.showMessageDialog(null,
+//                " Estadisticos "
+//                + "   **por tipo transaccion***\n"
+//                + "  Apertura de Cuenta" + apertura + " \n"
+//                + "  Deposito" + deposito + " \n"
+//                + "  Retiro " + retiro + "\n "
+//                + "  Pago Recibos " + pagoRecibos + "\n");
+        List<Datos> lista = new ArrayList<>();
+        lista.add(new Datos("Apertura de Cuenta", apertura));
+        lista.add(new Datos("Deposito", deposito));
+        lista.add(new Datos("Retiro", retiro));
+        lista.add(new Datos("Pago Recibos", pagoRecibos));
+        Reportes reportes = new Reportes();
+        reportes.generarReporteDelDia(lista);
     }
-     
-    
-    
-        public void ingresosAleatorio() {
-        
-            ClienteRandom alt=new ClienteRandom();
-            
-            
-        contadores(alt.condicion, alt.tipoTrans);
-        String tkt = numtkt(alt.condicion);
 
-        Cliente nuevo_nodo = new Cliente(alt.nombre, alt.apellido, alt.edad, alt.condicion, alt.tipoTrans, tkt);
+    public void ingresosAleatorio() {
+
+        ClienteRandom alt = new ClienteRandom();
+
+        contadores(alt.getCondicion(), alt.getTipoTrans());
+        String tkt = numtkt(alt.getCondicion());
+
+        Cliente nuevo_nodo = new Cliente(alt.getNombre(), alt.getApellido(), alt.getEdad(), alt.getCondicion(), alt.getTipoTrans(), tkt);
 
         if (inicioCola == null) {
             inicioCola = finalCola = nuevo_nodo;
@@ -216,11 +219,5 @@ public class Cola {
         }
 
     }
-    
-    
-    
-    
-    
-    
-    
+
 }
