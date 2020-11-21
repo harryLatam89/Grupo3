@@ -1,4 +1,3 @@
-
 package proyectocolas;
 
 import proyectocolas.modelos.Cola;
@@ -9,9 +8,8 @@ import javax.swing.JTable;
 
 public class formColaBanco extends javax.swing.JFrame {
 
-
     public static Cola cola = new Cola();
-  //  private static int crltv = 0;
+    //  private static int crltv = 0;
 
     public formColaBanco() {
         initComponents();
@@ -25,7 +23,6 @@ public class formColaBanco extends javax.swing.JFrame {
         this.modelo.addColumn("Transaccion");
         this.modelo.addColumn("Ticket");
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -368,10 +365,10 @@ public class formColaBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
-        
-         Cliente nodo;
+
+        Cliente nodo;
         cola.vaciar();
-            nodo = cola.getInicioCola();
+        nodo = cola.getInicioCola();
 
         modelo.setRowCount(0);
 
@@ -380,33 +377,36 @@ public class formColaBanco extends javax.swing.JFrame {
             this.modelo.addRow(cola.vecRegistro(nodo));
             nodo = nodo.getSiguiente();
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnEstadisticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticosActionPerformed
-       cola.estadisticos();
+        cola.estadisticos();
     }//GEN-LAST:event_btnEstadisticosActionPerformed
 
     private void btnAleariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleariosActionPerformed
         // TODO add your handling code here:
-            for(int i=5 ; i<10; i++){
-          cola.ingresosAleatorio() ;
-    }
-       
-             Cliente  nodo = cola.getInicioCola();
+        int x = 0;
+        try {
+            x = Integer.valueOf(jComboBox1.getSelectedItem().toString());
+        } catch (Exception e) {
+        }
+        for (int i = 0; i < x; i++) {
+            cola.ingresosAleatorio();
+        }
 
-            modelo.setRowCount(0);
+        Cliente nodo = cola.getInicioCola();
 
-            while (nodo != null) {
+        modelo.setRowCount(0);
 
-                this.modelo.addRow(cola.vecRegistro(nodo));
-                nodo = nodo.getSiguiente();
-            }
-        
-        
-        
+        while (nodo != null) {
+
+            this.modelo.addRow(cola.vecRegistro(nodo));
+            nodo = nodo.getSiguiente();
+        }
+
+
     }//GEN-LAST:event_btnAleariosActionPerformed
     DefaultTableModel modelo = new DefaultTableModel();
 
