@@ -107,13 +107,14 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         // formColaBanco fmr = new formColaBanco();
         Principal.frmR.setVisible(true);
+        Principal.frmR.actualizarLista();
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        formCaja fmr = new formCaja();
-        fmr.setVisible(true);
+        Principal.frmC.setVisible(true);
+        Principal.frmC.ordenar();
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 

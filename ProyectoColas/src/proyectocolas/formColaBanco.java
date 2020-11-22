@@ -40,6 +40,18 @@ public class formColaBanco extends javax.swing.JFrame {
 
     }
 
+    public void actualizarLista() {
+        Tickets nodo = null;
+        if (DataGlobal.cola1 != null && DataGlobal.cola1.getInicioCola() != null) {
+            nodo = DataGlobal.cola1.getInicioCola();
+        }
+        modelo.setRowCount(0);
+        while (nodo != null) {
+            this.modelo.addRow(DataGlobal.cola1.vecRegistro(nodo));
+            nodo = nodo.getSiguiente();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -512,6 +524,7 @@ public class formColaBanco extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlearios;
