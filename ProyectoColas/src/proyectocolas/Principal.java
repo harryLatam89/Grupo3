@@ -13,21 +13,20 @@ import javax.swing.JOptionPane;
  */
 public class Principal {
 
-    private static formColaBanco frm;
-   
+    public static Inicio frmI;
+    public static formColaBanco frmR;
+    public static formCaja frmC;
+
 //    public static Cliente Principio = new Cliente();
 //    public static Cliente Final = new Cliente();
-   // public static  Cola cola = new Cola();
+    // public static  Cola cola = new Cola();
     public static void main(String[] args) {
         // TODO code application logic here
-
-        frm = new formColaBanco();
-        frm.setVisible(true);
+        Principal.frmI = new Inicio();
+        Principal.frmR = new formColaBanco();
+        //Principal.frmC = new formCaja();
+        Principal.frmI.setVisible(true);
 
     }
-
-
-
-  
 
 }

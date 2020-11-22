@@ -5,12 +5,14 @@ public class Caracteristicas {
     private int numero;
     private String nombre;
     private String descripcion;
+    public static int contador;
 
     public Caracteristicas() {
+        this.numero = ++Caracteristicas.contador;
     }
 
-    public Caracteristicas(int numero, String nombre, String descripcion) {
-        this.numero = numero;
+    public Caracteristicas(String nombre, String descripcion) {
+        this();
         this.nombre = nombre;
         this.descripcion = descripcion;
     }

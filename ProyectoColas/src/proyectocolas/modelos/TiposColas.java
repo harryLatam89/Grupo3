@@ -17,8 +17,14 @@ public class TiposColas {
     private char tipo;
     private List<Caracteristicas> caracteristicas;
 
-    public TiposColas() {
+    public TiposColas(char tipo) {
         caracteristicas = new ArrayList<>();
+        this.tipo = tipo;
+    }
+
+    public TiposColas(char tipo, List<Caracteristicas> caracteristicas) {
+        this.tipo = tipo;
+        this.caracteristicas = caracteristicas;
     }
 
     public char getTipo() {

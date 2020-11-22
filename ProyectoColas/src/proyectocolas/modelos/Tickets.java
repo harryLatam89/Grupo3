@@ -13,50 +13,49 @@ import java.util.Date;
  */
 public class Tickets {
 
+    private String numero;
     private TiposColas tipoCola;
-    private int numero;
-    private Date horaEntrada = new Date();
+    private Date horaEntrada;
     private Cliente cliente;
+    private Transacciones tipoTransac;
+    private Tickets siguiente;
 
-    public Tickets() {
-    }
-
-    public Tickets(TiposColas tipoCola, int numero, Cliente cliente) {
+    public Tickets(String numero, TiposColas tipoCola, Cliente cliente, Transacciones tipoTransac) {
+        horaEntrada = new Date();
         this.tipoCola = tipoCola;
         this.numero = numero;
         this.cliente = cliente;
+        this.tipoTransac = tipoTransac;
+    }
+
+    public String getNumero() {
+        return numero;
     }
 
     public TiposColas getTipoCola() {
         return tipoCola;
     }
 
-    public void setTipoCola(TiposColas tipoCola) {
-        this.tipoCola = tipoCola;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
     public Date getHoraEntrada() {
         return horaEntrada;
-    }
-
-    public void setHoraEntrada(Date horaEntrada) {
-        this.horaEntrada = horaEntrada;
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public Transacciones getTipoTransac() {
+        return tipoTransac;
     }
+
+    public Tickets getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Tickets siguiente) {
+        this.siguiente = siguiente;
+    }
+    
+    
 
 }

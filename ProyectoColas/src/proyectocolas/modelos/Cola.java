@@ -1,12 +1,9 @@
 package proyectocolas.modelos;
 
-import java.util.ArrayList;
 import java.util.List;
-import proyectocolas.modelos.Cliente;
 import javax.swing.JOptionPane;
 import proyectocolas.ClienteRandom;
-import proyectocolas.Reportes;
-import proyectocolas.reporte.Datos;
+import proyectocolas.datos.DataGlobal;
 
 public class Cola {
 
@@ -14,20 +11,19 @@ public class Cola {
      * *** BANCO ***
      */
     private static int crltv = 0;
-    public static Cliente inicioCola, finalCola;
+    private Tickets inicioCola, finalCola;
     public static int apertura, deposito, retiro, pagoRecibos, westerUnion, empresa;
     public static int embaraza, discapacitado, terceraEdad, cliente;
 
     String Cola = "";
 
     public Cola() {
-        inicioCola = null;
-        finalCola = null;
-
+        this.inicioCola = null;
+        this.finalCola = null;
     }
 
     public boolean ColaVacia() {
-        if (inicioCola == null) {
+        if (this.inicioCola == null) {
             return true;
         } else {
             return false;
@@ -36,60 +32,89 @@ public class Cola {
     }
 //  JOptionPane.showMessageDialog(null, "dato inicial apertura"+ Apertura);
 
-    public void ingresar(String nombre, String apellido, int edad, String condicion, String tipoTrans) {
+    public void ingresar(Cliente cliente, Caracteristicas condicion, Transacciones tipoTrans) {
 
         contadores(condicion, tipoTrans);
-        String tkt = numtkt(condicion);
+        Cliente nuevo_nodo = cliente;
+        Tickets ticket = new Tickets(numtkt(condicion), tpcola(condicion), cliente, tipoTrans);
 
-        Cliente nuevo_nodo = new Cliente(nombre, apellido, edad, condicion, tipoTrans, tkt);
-
-        if (inicioCola == null) {
-            inicioCola = finalCola = nuevo_nodo;
-        } else if (inicioCola.prioridad > nuevo_nodo.prioridad) {
-            nuevo_nodo.setSiguiente(inicioCola);
-            inicioCola = nuevo_nodo;
+        if (this.inicioCola == null) {
+            this.inicioCola = this.finalCola = ticket;
+        } else if (this.inicioCola.getCliente().getPrioridad() < ticket.getCliente().getPrioridad()) {
+            ticket.setSiguiente(this.inicioCola);
+            this.inicioCola = ticket;
         } else {
-            Cliente ant = null;
-            Cliente sig = inicioCola;
-            while (sig != null && nuevo_nodo.prioridad >= sig.prioridad) {
+            Tickets ant = null;
+            Tickets sig = this.inicioCola;
+            while (sig != null && ticket.getCliente().getPrioridad() >= sig.getCliente().getPrioridad()) {
                 ant = sig;
                 sig = sig.getSiguiente();
             }
-            nuevo_nodo.setSiguiente(sig);
-            ant.setSiguiente(nuevo_nodo);
+            ticket.setSiguiente(sig);
+            ant.setSiguiente(ticket);
             if (sig == null) {
-                finalCola = nuevo_nodo;
+                this.finalCola = ticket;
+            }
+
+        }
+
+    }
+    
+    public void ingresarReversa(Tickets ticket) {
+        if (this.inicioCola == null) {
+            this.inicioCola = this.finalCola = ticket;
+        } else if (this.inicioCola.getCliente().getPrioridad() < ticket.getCliente().getPrioridad()) {
+            ticket.setSiguiente(this.inicioCola);
+            this.inicioCola = ticket;
+        } else {
+            Tickets ant = null;
+            Tickets sig = this.inicioCola;
+            while (sig != null && ticket.getCliente().getPrioridad() >= sig.getCliente().getPrioridad()) {
+                ant = sig;
+                sig = sig.getSiguiente();
+            }
+            ticket.setSiguiente(sig);
+            ant.setSiguiente(ticket);
+            if (sig == null) {
+                this.finalCola = ticket;
             }
 
         }
 
     }
 
-    public static String[] vecRegistro(Cliente nodo) {
-
-        String nom = nodo.getNombre();
-        String apell = nodo.getApellido();
-        String cond = nodo.getCondicion();
-        String transac = nodo.getTipoTransaccion();
-        String tkt = nodo.getNumerodeTicket();
+    public static String[] vecRegistro(Tickets nodo) {
+        String nom = nodo.getCliente().getNombre();
+        String apell = nodo.getCliente().getApellido();
+        String cond = nodo.getCliente().getCondicion().getNombre();
+        String transac = nodo.getTipoTransac().getNombre();
+        String tkt = nodo.getCliente().getNumerodeTicket();
         String vec[] = {nom, apell, cond, transac, tkt};
         return vec;
     }
 
-    public Cliente getInicioCola() {
-        return inicioCola;
+    public Tickets getInicioCola() {
+        return this.inicioCola;
     }
 
-    public static Cliente getFinalCola() {
+    public Tickets getFinalCola() {
         return finalCola;
+    }
+
+    public void setInicioCola(Tickets inicioCola) {
+        this.inicioCola = inicioCola;
+    }
+
+    public void setFinalCola(Tickets finalCola) {
+        this.finalCola = finalCola;
     }
 
     public void despachar() {
 
-        if (inicioCola != null) {
-            inicioCola = inicioCola.siguiente;
-            if (inicioCola == null) {
-                finalCola = null;
+        if (this.inicioCola != null) {
+            this.inicioCola = this.inicioCola.getSiguiente();
+            if (this.inicioCola == null) {
+                this.finalCola = null;
             }
 
         } else {
@@ -98,95 +123,81 @@ public class Cola {
 
     }
 
-    public void contadores(String condicion, String tipoTrans) {
+    public void contadores(Caracteristicas condicion, Transacciones tipoTrans) {
 
-        crltv++;
-        switch (condicion) {
-            case "Discapacitado":
-                discapacitado++;
+        this.crltv++;
+        switch (condicion.getNumero()) {
+            case 4:
+                this.discapacitado++;
                 break;
-
-            case "Tercera edad":
-                terceraEdad++;
+            case 3:
+                this.terceraEdad++;
                 break;
-
-            case "Embarazada":
-                embaraza++;
+            case 2:
+                this.embaraza++;
                 break;
-            case "Cliente":
-                cliente++;
+            default:
+                this.cliente++;
                 break;
-        }
-
-        switch (tipoTrans) {
-            case "Deposito":
-                deposito++;
-                break;
-
-            case "Retiro":
-                retiro++;
-                break;
-
-            case "Apertura de Cuenta":
-                apertura++;
-                break;
-            case "Pago Recibos":
-                pagoRecibos++;
-                break;
-            case "WesternUnion":
-                pagoRecibos++;
-                break;
-            case "Empresa":
-                empresa++;
-                break;
-
         }
 
     }
 
-    public static String numtkt(String prio) {
-
+    public static String numtkt(Caracteristicas prio) {
         String valor = "";
-
-        switch (prio) {
-            case "Discapacitado":
+        switch (prio.getNumero()) {
+            case 4:
                 valor = "D" + discapacitado;
                 break;
-
-            case "Tercera edad":
+            case 3:
                 valor = "T" + terceraEdad;
                 break;
-
-            case "Embarazada":
+            case 2:
                 valor = "E" + embaraza;
                 break;
-            case "Cliente":
+            default:
                 valor = "C" + cliente;
-
         }
-
         return valor;
     }
 
-    public void vaciar() {
-        inicioCola = finalCola = null;
+    public static TiposColas tpcola(Caracteristicas prio) {
+        TiposColas tp = null;
+        switch (prio.getNumero()) {
+            case 4:
+                tp = buscarTPcola('A');
+                break;
+            case 3:
+                tp = buscarTPcola('B');
+                break;
+            case 2:
+                tp = buscarTPcola('C');
+                break;
+            default:
+                tp = buscarTPcola('D');
+        }
+
+        return tp;
     }
 
-    public void estadisticos() {
-//        JOptionPane.showMessageDialog(null,
-//                " Estadisticos "
-//                + "   **por tipo transaccion***\n"
-//                + "  Apertura de Cuenta" + apertura + " \n"
-//                + "  Deposito" + deposito + " \n"
-//                + "  Retiro " + retiro + "\n "
-//                + "  Pago Recibos " + pagoRecibos + "\n");
-        List<Datos> lista = new ArrayList<>();
-        lista.add(new Datos("Apertura de Cuenta", apertura));
-        lista.add(new Datos("Deposito", deposito));
-        lista.add(new Datos("Retiro", retiro));
-        lista.add(new Datos("Pago Recibos", pagoRecibos));
-        Reportes reportes = new Reportes();
-        reportes.generarReporteDelDia(lista);
+    public static TiposColas buscarTPcola(char caracter) {
+        TiposColas tp = null;
+        List<TiposColas> list = DataGlobal.tiposColas;
+        if (list == null) {
+            list = DataGlobal.tiposColasIniciales();
+        }
+        if (!list.isEmpty()) {
+            for (TiposColas tipoCola : list) {
+                if (tipoCola.getTipo() == caracter) {
+                    tp = tipoCola;
+                }
+            }
+        }
+        return tp;
+    }
+
+    public void vaciar() {
+        this.inicioCola = this.finalCola = null;
     }
 
     public void ingresosAleatorio() {
@@ -194,30 +205,32 @@ public class Cola {
         ClienteRandom alt = new ClienteRandom();
 
         contadores(alt.getCondicion(), alt.getTipoTrans());
-        String tkt = numtkt(alt.getCondicion());
 
-        Cliente nuevo_nodo = new Cliente(alt.getNombre(), alt.getApellido(), alt.getEdad(), alt.getCondicion(), alt.getTipoTrans(), tkt);
+        Cliente nuevo_nodo = new Cliente(alt.getNombre(), alt.getApellido(), alt.getEdad(), alt.generarDui(), numtkt(alt.getCondicion()), alt.getCondicion());
+        Tickets ticket = new Tickets(numtkt(alt.getCondicion()), tpcola(alt.getCondicion()), nuevo_nodo, alt.getTipoTrans());
 
-        if (inicioCola == null) {
-            inicioCola = finalCola = nuevo_nodo;
-        } else if (inicioCola.prioridad > nuevo_nodo.prioridad) {
-            nuevo_nodo.setSiguiente(inicioCola);
-            inicioCola = nuevo_nodo;
+        if (this.inicioCola == null) {
+            this.inicioCola = this.finalCola = ticket;
+        } else if (this.inicioCola.getCliente().getPrioridad() < ticket.getCliente().getPrioridad()) {
+            ticket.setSiguiente(this.inicioCola);
+            this.inicioCola = ticket;
         } else {
-            Cliente ant = null;
-            Cliente sig = inicioCola;
-            while (sig != null && nuevo_nodo.prioridad >= sig.prioridad) {
+            Tickets ant = null;
+            Tickets sig = this.inicioCola;
+            while (sig != null && ticket.getCliente().getPrioridad() >= sig.getCliente().getPrioridad()) {
                 ant = sig;
                 sig = sig.getSiguiente();
             }
-            nuevo_nodo.setSiguiente(sig);
-            ant.setSiguiente(nuevo_nodo);
+            ticket.setSiguiente(sig);
+            ant.setSiguiente(ticket);
             if (sig == null) {
-                finalCola = nuevo_nodo;
+                this.finalCola = ticket;
             }
-
         }
-
+        if (DataGlobal.colaEstadistica1 == null) {
+            DataGlobal.colaEstadistica1= new Cola();
+        }
+        DataGlobal.colaEstadistica1.ingresar(nuevo_nodo, nuevo_nodo.getCondicion(), ticket.getTipoTransac());
     }
 
 }

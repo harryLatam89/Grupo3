@@ -4,24 +4,40 @@ import proyectocolas.modelos.Cola;
 import proyectocolas.modelos.Cliente;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import proyectocolas.datos.DataGlobal;
+import proyectocolas.modelos.Caracteristicas;
+import proyectocolas.modelos.Tickets;
+import proyectocolas.modelos.Transacciones;
 
 public class formColaBanco extends javax.swing.JFrame {
 
-    public static Cola cola = new Cola();
     //  private static int crltv = 0;
-
     public formColaBanco() {
         initComponents();
-
         this.tablaCola.setModel(modelo);
-
         this.modelo.addColumn("Nombre");
         this.modelo.addColumn("Apellido");
         this.modelo.addColumn("Condicion");
-
         this.modelo.addColumn("Transaccion");
         this.modelo.addColumn("Ticket");
+        if (DataGlobal.caracteristicas == null) {
+            DataGlobal.caracteristicas = DataGlobal.caracteristicasIniciales();
+        }
+        if (!DataGlobal.caracteristicas.isEmpty()) {
+            DataGlobal.caracteristicas.forEach((caracteristica) -> {
+                cbCondicion.addItem(caracteristica.getNombre());
+            });
+        }
+
+        if (DataGlobal.transacciones == null) {
+            DataGlobal.transacciones = DataGlobal.transaccionesIniciales();
+        }
+        if (!DataGlobal.transacciones.isEmpty()) {
+            DataGlobal.transacciones.forEach((caracteristica) -> {
+                cbTransaccion.addItem(caracteristica.getNombre());
+            });
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -34,7 +50,6 @@ public class formColaBanco extends javax.swing.JFrame {
         cbTransaccion = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -42,6 +57,9 @@ public class formColaBanco extends javax.swing.JFrame {
         cbCondicion = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtDui = new javax.swing.JTextField();
+        jSpnEdad = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -53,6 +71,7 @@ public class formColaBanco extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         btnAlearios = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,7 +91,6 @@ public class formColaBanco extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Ingreso uno a uno"));
 
-        cbTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apertura de Cuenta", "Deposito", "Retiro", "Pago Recibos", "WesternUnion", "Empresa", " " }));
         cbTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTransaccionActionPerformed(evt);
@@ -93,11 +111,13 @@ public class formColaBanco extends javax.swing.JFrame {
             }
         });
 
-        cbCondicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Tercera edad", "Embarazada", "Discapacitado" }));
-
         jLabel5.setText("Tipo Transaccion");
 
         jLabel6.setText("Condicion");
+
+        jLabel10.setText("dui");
+
+        jSpnEdad.setModel(new javax.swing.SpinnerNumberModel(18, 18, 150, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,28 +126,38 @@ public class formColaBanco extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnIngresar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnIngresar)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtDui, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpnEdad)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,20 +169,24 @@ public class formColaBanco extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpnEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDui, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(cbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(btnIngresar)
-                .addGap(40, 40, 40))
+                .addContainerGap())
         );
 
         jLabel7.setBackground(new java.awt.Color(204, 255, 255));
@@ -255,47 +289,57 @@ public class formColaBanco extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
+        jButton2.setText("Inicio");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEstadisticos, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 8, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEstadisticos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEstadisticos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         pack();
@@ -307,31 +351,64 @@ public class formColaBanco extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
-        Cliente nodo;
+        Tickets nodo;
         if (txtNombre.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Por favor ingrese una nombre");
+            return;
         }
-        if (txtEdad.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Por favor ingrese un edad");
+        if (txtDui.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese dui");
+            return;
+        }
+        if (txtApellido.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un apellido");
+            return;
         }
         try {
-
             String nom = txtNombre.getText();
             String apellido = txtApellido.getText();
-
-            int edad = Integer.parseInt(txtEdad.getText());
+            String dui = txtDui.getText();
+            int edad = Integer.parseInt(jSpnEdad.getValue().toString());
             String condicion = cbCondicion.getSelectedItem().toString();
             String tipTrans = cbTransaccion.getSelectedItem().toString();
             // llamamos al metodo registar para almcenser lo datos
-
-            cola.ingresar(nom, apellido, edad, condicion, tipTrans);
-            nodo = cola.getInicioCola();
-
+            Caracteristicas caracteristicar = null;
+            Transacciones transaccionr = null;
+            if (DataGlobal.caracteristicas != null) {
+                for (Caracteristicas caracteristica : DataGlobal.caracteristicas) {
+                    if (caracteristica.getNombre().equals(condicion)) {
+                        caracteristicar = caracteristica;
+                    }
+                }
+            }
+            if (DataGlobal.transacciones != null) {
+                for (Transacciones transaccion : DataGlobal.transacciones) {
+                    if (transaccion.getNombre().equals(tipTrans)) {
+                        transaccionr = transaccion;
+                    }
+                }
+            }
+            if (caracteristicar == null) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese una condicion");
+                return;
+            }
+            if (transaccionr == null) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un tipo de transaccion");
+                return;
+            }
+            if (DataGlobal.cola1 == null) {
+                DataGlobal.cola1 = new Cola();
+            }
+            if (DataGlobal.colaEstadistica1 == null) {
+                DataGlobal.colaEstadistica1 = new Cola();
+            }
+            Cliente cliente = new Cliente(nom, apellido, edad, dui, Cola.numtkt(caracteristicar), caracteristicar);
+            DataGlobal.cola1.ingresar(cliente, caracteristicar, transaccionr);
+            DataGlobal.colaEstadistica1.ingresar(cliente, caracteristicar, transaccionr);
+            nodo = DataGlobal.cola1.getInicioCola();
             modelo.setRowCount(0);
-
             while (nodo != null) {
-
-                this.modelo.addRow(cola.vecRegistro(nodo));
+                this.modelo.addRow(DataGlobal.cola1.vecRegistro(nodo));
                 nodo = nodo.getSiguiente();
             }
 
@@ -350,15 +427,18 @@ public class formColaBanco extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Cliente nodo;
-        cola.despachar();
-        nodo = cola.getInicioCola();
+        Tickets nodo;
+        if (DataGlobal.cola1 == null) {
+            DataGlobal.cola1 = new Cola();
+        }
+        DataGlobal.cola1.despachar();
+        nodo = DataGlobal.cola1.getInicioCola();
 
         modelo.setRowCount(0);
 
         while (nodo != null) {
 
-            this.modelo.addRow(cola.vecRegistro(nodo));
+            this.modelo.addRow(DataGlobal.cola1.vecRegistro(nodo));
             nodo = nodo.getSiguiente();
         }
 
@@ -366,15 +446,17 @@ public class formColaBanco extends javax.swing.JFrame {
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
 
-        Cliente nodo;
-        cola.vaciar();
-        nodo = cola.getInicioCola();
+        if (DataGlobal.cola1 == null) {
+            DataGlobal.cola1 = new Cola();
+        }
+        Tickets nodo;
+        DataGlobal.cola1.vaciar();
+        nodo = DataGlobal.cola1.getInicioCola();
 
         modelo.setRowCount(0);
 
         while (nodo != null) {
-
-            this.modelo.addRow(cola.vecRegistro(nodo));
+            this.modelo.addRow(DataGlobal.cola1.vecRegistro(nodo));
             nodo = nodo.getSiguiente();
         }
 
@@ -382,7 +464,11 @@ public class formColaBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnEstadisticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticosActionPerformed
-        cola.estadisticos();
+        Reportes re = new Reportes();
+        if (DataGlobal.colaEstadistica1 == null) {
+            DataGlobal.colaEstadistica1 = new Cola();
+        }
+        re.estadisticos(DataGlobal.colaEstadistica1);
     }//GEN-LAST:event_btnEstadisticosActionPerformed
 
     private void btnAleariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleariosActionPerformed
@@ -392,22 +478,30 @@ public class formColaBanco extends javax.swing.JFrame {
             x = Integer.valueOf(jComboBox1.getSelectedItem().toString());
         } catch (Exception e) {
         }
+        if (DataGlobal.cola1 == null) {
+            DataGlobal.cola1 = new Cola();
+        }
         for (int i = 0; i < x; i++) {
-            cola.ingresosAleatorio();
+            DataGlobal.cola1.ingresosAleatorio();
         }
 
-        Cliente nodo = cola.getInicioCola();
+        Tickets nodo = DataGlobal.cola1.getInicioCola();
 
         modelo.setRowCount(0);
 
         while (nodo != null) {
 
-            this.modelo.addRow(cola.vecRegistro(nodo));
+            this.modelo.addRow(DataGlobal.cola1.vecRegistro(nodo));
             nodo = nodo.getSiguiente();
         }
 
 
     }//GEN-LAST:event_btnAleariosActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Principal.frmI.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
     DefaultTableModel modelo = new DefaultTableModel();
 
     public static void main(String args[]) {
@@ -427,8 +521,10 @@ public class formColaBanco extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbCondicion;
     private javax.swing.JComboBox<String> cbTransaccion;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -441,9 +537,10 @@ public class formColaBanco extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpnEdad;
     private javax.swing.JTable tablaCola;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtDui;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
