@@ -36,7 +36,6 @@ public class DataGlobal {
         List<Caracteristicas> list = new ArrayList<>();
         list.add(new Caracteristicas("Cliente", " descripcion.."));
         list.add(new Caracteristicas("Tercera edad", " descripcion.."));
-        list.add(new Caracteristicas("Tercera edad", " descripcion.."));
         list.add(new Caracteristicas("Embarazada", " descripcion.."));
         list.add(new Caracteristicas("Discapacitado", " descripcion.."));
         return list;

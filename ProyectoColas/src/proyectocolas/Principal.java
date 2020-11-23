@@ -24,7 +24,7 @@ public class Principal {
         // TODO code application logic here
         Principal.frmI = new Inicio();
         Principal.frmR = new formColaBanco();
-        //Principal.frmC = new formCaja();
+        Principal.frmC = new formCaja();
         Principal.frmI.setVisible(true);
 
     }

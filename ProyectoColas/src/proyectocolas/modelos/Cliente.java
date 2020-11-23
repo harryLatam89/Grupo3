@@ -17,7 +17,8 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nombre, String apellido, int edad, String dui, String numerodeTicket, Caracteristicas condicion) {
+    public Cliente(String nombre, String apellido, int edad, String dui,
+            String numerodeTicket, Caracteristicas condicion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -41,7 +42,7 @@ public class Cliente {
                 valor = 3;
                 break;
             default:
-                valor = 4;
+                valor = 0;
                 break;
         }
 

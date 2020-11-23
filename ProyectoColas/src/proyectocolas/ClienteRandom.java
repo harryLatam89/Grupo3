@@ -9,10 +9,8 @@ import proyectocolas.modelos.Transacciones;
 
 public class ClienteRandom {
 
-    private String nombres[] = {"José", "Manuel", "María", "Carmen", "Jesús ", "Antonio", "Cristina", "Jordi", "Mikel", "Javier", "Francisco ", "Mohamed", "Lucas", "Hugo", "Isabel", "Pablo", "Ana", "Lucía", "Antonia",
-        "Dolores", "Laura", "Mario", "David", "Marcos", "Daniel"};
-    private String apellidos[] = {"Acosta", "Castellanos", "Domínguez", "Correa", "Enríquez", "Estrada", "Alayón", "Falcón",
-        "Ferreira", "Figueras", "Galán", "Gallegos", "Gillén", "Gómez", "Ibarra", "Lafuente", "Llano", "Lobo", "López", "Machado", "Martínez", "Navarro", "Ochoa", "Peraza", "Quijada"};
+    private String nombres[] = {"José", "Manuel", "María", "Carmen", "Jesús ", "Antonio", "Cristina", "Jordi", "Mikel", "Javier", "Francisco ", "Mohamed", "Lucas", "Hugo", "Isabel", "Pablo", "Ana", "Lucía", "Antonia","Dolores", "Laura", "Mario", "David", "Marcos", "Daniel"};
+    private String apellidos[] = {"Acosta", "Castellanos", "Domínguez", "Correa", "Enríquez", "Estrada", "Alayón", "Falcón","Ferreira", "Figueras", "Galán", "Gallegos", "Gillén", "Gómez", "Ibarra", "Lafuente", "Llano", "Lobo", "López", "Machado", "Martínez", "Navarro", "Ochoa", "Peraza", "Quijada"};
 
     private Caracteristicas condicion;
     private Transacciones tipoTrans;

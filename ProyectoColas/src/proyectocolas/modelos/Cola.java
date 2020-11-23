@@ -59,7 +59,7 @@ public class Cola {
         }
 
     }
-    
+
     public void ingresarReversa(Tickets ticket) {
         if (this.inicioCola == null) {
             this.inicioCola = this.finalCola = ticket;
@@ -130,10 +130,10 @@ public class Cola {
             case 4:
                 this.discapacitado++;
                 break;
-            case 3:
+            case 2:
                 this.terceraEdad++;
                 break;
-            case 2:
+            case 3:
                 this.embaraza++;
                 break;
             default:
@@ -149,10 +149,10 @@ public class Cola {
             case 4:
                 valor = "D" + discapacitado;
                 break;
-            case 3:
+            case 2:
                 valor = "T" + terceraEdad;
                 break;
-            case 2:
+            case 3:
                 valor = "E" + embaraza;
                 break;
             default:
@@ -165,16 +165,16 @@ public class Cola {
         TiposColas tp = null;
         switch (prio.getNumero()) {
             case 4:
-                tp = buscarTPcola('A');
+                tp = buscarTPcola('D');
                 break;
             case 3:
-                tp = buscarTPcola('B');
+                tp = buscarTPcola('T');
                 break;
             case 2:
-                tp = buscarTPcola('C');
+                tp = buscarTPcola('E');
                 break;
             default:
-                tp = buscarTPcola('D');
+                tp = buscarTPcola('C');
         }
 
         return tp;
@@ -228,7 +228,7 @@ public class Cola {
             }
         }
         if (DataGlobal.colaEstadistica1 == null) {
-            DataGlobal.colaEstadistica1= new Cola();
+            DataGlobal.colaEstadistica1 = new Cola();
         }
         DataGlobal.colaEstadistica1.ingresar(nuevo_nodo, nuevo_nodo.getCondicion(), ticket.getTipoTransac());
     }
