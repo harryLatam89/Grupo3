@@ -2,6 +2,9 @@
 <!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad4f61dd-abf5-4d75-94be-c2a327b11309">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="tipo" class="java.lang.String">
+		<parameterDescription><![CDATA[tipo de documento]]></parameterDescription>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -15,7 +18,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="60" splitType="Stretch">
+		<band height="99" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="540" height="60" uuid="93baa50b-2878-4a0a-a25b-47f2a348afe2"/>
 				<textElement>
@@ -23,6 +26,13 @@
 				</textElement>
 				<text><![CDATA[Reporte del dia]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="60" width="300" height="30" uuid="2ac96e90-1b65-4f72-b27f-b0792e7e8dd3"/>
+				<textElement>
+					<font fontName="Agency FB" size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -59,13 +69,13 @@
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="10" y="0" width="170" height="30" uuid="38f80068-1b93-43eb-80c9-32f06c405e27">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d504791f-1213-4a96-a96e-37783a12ec80"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="0" width="100" height="30" uuid="92fe6d23-4076-48f4-afb1-5b226a8249ec">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3c780be0-6dd6-4ab6-a66d-f80168ca1e1a"/>
 				</reportElement>
@@ -75,7 +85,7 @@
 	</detail>
 	<columnFooter>
 		<band height="48" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="0" width="100" height="30" uuid="dda37b6d-b649-4246-adb1-40aaa2c4ec02"/>
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>

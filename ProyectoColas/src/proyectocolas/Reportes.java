@@ -28,12 +28,13 @@ import proyectocolas.reporte.DatosJasperAdapter;
  */
 public class Reportes {
 
-    public void generarReporteDelDia(List<Datos> datos) {
+    public void generarReporteDelDia(List<Datos> datos, String param) {
         try {
             JasperReport report = JasperCompileManager.compileReport("src/proyectocolas/reporte/reporte.jrxml");
             System.out.println("jaaperreport");
             // se invocan parametros para ser insertados en el reporte
             Map<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("tipo", param);
             // se adaptan datos para ser insertados al reporte
             DatosJasperAdapter adapter = new DatosJasperAdapter();
             adapter.setLista(datos);
@@ -48,7 +49,7 @@ public class Reportes {
 
     public List<Tickets> obtenerUtilList(Cola colar) {
         List<Tickets> lista = new ArrayList<>();
-        
+
         Tickets nodo = null;
         if (colar != null && colar.getInicioCola() != null) {
             nodo = colar.getInicioCola();
@@ -62,7 +63,6 @@ public class Reportes {
 
     public void estadisticos(Cola colax) {
         List<Tickets> ticketsr = obtenerUtilList(colax);
-        
         if (ticketsr != null && !ticketsr.isEmpty()) {
             List<MapaEstadist> maps = new ArrayList<>();
 
@@ -91,7 +91,41 @@ public class Reportes {
                 lista.add(new Datos(map.getNombre(), map.getCantidad()));
             }
             Reportes reportes = new Reportes();
-            reportes.generarReporteDelDia(lista);
+            reportes.generarReporteDelDia(lista, "Asistencias por Caracteristica");
+        }
+    }
+
+    public void estadisticosDos(Cola colax) {
+        List<Tickets> ticketsr = obtenerUtilList(colax);
+        if (ticketsr != null && !ticketsr.isEmpty()) {
+            List<MapaEstadist> maps = new ArrayList<>();
+
+            for (Tickets ticket : ticketsr) {
+                if (maps.isEmpty()) {
+                    maps.add(new MapaEstadist(ticket.getTipoTransac().getId(), 1, ticket.getTipoTransac().getNombre()));
+                } else {
+                    int x = 0;
+                    List<MapaEstadist> maps2 = maps;
+                    boolean busc = true;
+                    for (MapaEstadist mp : maps) {
+                        if (mp.getNombre().equals(ticket.getTipoTransac().getNombre())) {
+                            maps2.set(x, new MapaEstadist(mp.getId(), mp.getCantidad() + 1, ticket.getTipoTransac().getNombre()));
+                            busc = false;
+                        }
+                        x++;
+                    }
+                    maps = maps2;
+                    if (busc) {
+                        maps.add(new MapaEstadist(ticket.getTipoTransac().getId(), 1, ticket.getTipoTransac().getNombre()));
+                    }
+                }
+            }
+            List<Datos> lista = new ArrayList<>();
+            for (MapaEstadist map : maps) {
+                lista.add(new Datos(map.getNombre(), map.getCantidad()));
+            }
+            Reportes reportes = new Reportes();
+            reportes.generarReporteDelDia(lista, "Asistencias por Tipo de Transaccion");
         }
     }
 

@@ -219,7 +219,7 @@ public class formCaja extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaCola);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Ingreso uno a uno"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Cliente en Proceso"));
 
         txtNombre.setEnabled(false);
 
